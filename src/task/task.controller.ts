@@ -1,17 +1,38 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
+import { TaskManagementService } from './task-management/task-management.service';
 import { ITask } from './task.model';
 
-@Controller()
+@Controller('tasks')
 export class TaskController {
   private tasks: ITask[] = [{ title: 'New Task', completed: false }];
 
-  @Get('tasks')
-  getTasks() {
-    return this.tasks;
+  constructor(private readonly taskManagementService: TaskManagementService) {}
+
+  @Get()
+  async tasksList() {
+    return await this.taskManagementService.findAll();
   }
 
-  @Post('task')
-  addTask(@Body() param: ITask) {
-    this.tasks.push(param);
+  @Post()
+  async create(@Body() task: ITask) {
+    return await this.taskManagementService.create(task);
+  }
+
+  @Put(':id')
+  async update(@Param('id') id: string, @Body() task: ITask) {
+    return await this.taskManagementService.update(id, task);
+  }
+
+  @Delete(':id')
+  async delete(@Param('id') id: string) {
+    return await this.taskManagementService.delete(id);
   }
 }
