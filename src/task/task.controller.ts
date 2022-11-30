@@ -6,10 +6,13 @@ import {
   Param,
   Post,
   Put,
+  UseGuards,
 } from '@nestjs/common';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { TaskManagementService } from './task-management/task-management.service';
 import { ITask } from './task.model';
 
+@UseGuards(JwtAuthGuard)
 @Controller('tasks')
 export class TaskController {
   private tasks: ITask[] = [{ title: 'New Task', completed: false }];
