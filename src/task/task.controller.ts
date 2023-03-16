@@ -8,7 +8,7 @@ import {
   Put,
   UseGuards,
 } from '@nestjs/common';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { TaskManagementService } from './task-management/task-management.service';
 import { ITask } from './task.model';
 
